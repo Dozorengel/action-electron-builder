@@ -80,29 +80,6 @@ You can configure the action further with the following options:
 
 See [`action.yml`](./action.yml) for a list of all possible input variables.
 
-### Code Signing
-
-If you are building for **macOS**, you'll want your code to be [signed](https://samuelmeuli.com/blog/2019-04-07-packaging-and-publishing-an-electron-app/#code-signing). GitHub Actions therefore needs access to your code signing certificates:
-
-- Open the Keychain Access app or the Apple Developer Portal. Export all certificates related to your app into a _single_ file (e.g. `certs.p12`) and set a strong password
-- Base64-encode your certificates using the following command: `base64 -i certs.p12 -o encoded.txt`
-- In your project's GitHub repository, go to Settings → Secrets and add the following two variables:
-  - `mac_certs`: Your encoded certificates, i.e. the content of the `encoded.txt` file you created before
-  - `mac_certs_password`: The password you set when exporting the certificates
-
-Add the following options to your workflow's existing `action-electron-builder` step:
-
-```yml
-- name: Build/release Electron app
-  uses: samuelmeuli/action-electron-builder@v1
-  with:
-    # ...
-    mac_certs: ${{ secrets.mac_certs }}
-    mac_certs_password: ${{ secrets.mac_certs_password }}
-```
-
-The same goes for **Windows** code signing (`windows_certs` and `windows_certs_password` secrets).
-
 ### Snapcraft
 
 If you are building/releasing your Linux app for Snapcraft (which is `electron-builder`'s default), you will additionally need to install and sign in to Snapcraft. This can be done using an `action-snapcraft` step before the `action-electron-builder` step:

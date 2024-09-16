@@ -1,4 +1,4 @@
-name: Electron Builder Action
+name: Electron Builder Action (non-platform specific)
 author: Dozorengel
 description: GitHub Action for building and releasing Electron apps
 
